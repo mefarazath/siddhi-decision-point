@@ -1,0 +1,20 @@
+@App:name('LockAccountOnFailureApp')
+
+-- @sink(type='log')
+define stream login_failure_stream (user string, service_provider string);
+
+-- @sink(type='log')
+define stream login_failure_count_stream (user string, counter long);
+
+-- @sink(type='log')
+define stream account_lock_stream (user string);
+
+
+from login_failure_stream#window.time(60 sec)
+select user, count() as counter group by user
+insert into login_failure_count_stream;
+
+
+from login_failure_count_stream[(counter > 3)]
+select user
+insert into account_lock_stream;
