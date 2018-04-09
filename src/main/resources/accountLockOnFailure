@@ -1,0 +1,22 @@
+function(context) {
+    executeStep({
+        id: '1',
+        on: {
+            success: function (context) {
+                // DUMMY TEST
+                var appName = 'LockAccountOnFailureApp';
+                var streamName = 'login_failure_stream';
+                var username = context.subject.username;
+                var sp = 'travelocity';
+                publishEvent(appName, streamName, username);
+
+                var accountLocked = isAccountLocked(context);
+                Log.info("isAccountLocked: " + accountLocked);
+            },
+            fail : function (context) {
+                Log.info("--------------- Failure ");
+
+            }
+        }
+    });
+}
