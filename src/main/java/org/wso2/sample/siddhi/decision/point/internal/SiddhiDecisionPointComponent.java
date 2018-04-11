@@ -88,7 +88,7 @@ public class SiddhiDecisionPointComponent {
 
     private String getSiddhiApp() throws IOException {
 
-        InputStream stream = getClass().getClassLoader().getResourceAsStream("accountLockOnFailureApp");
+        InputStream stream = getClass().getClassLoader().getResourceAsStream("accountLockOnFailureApp.siddhi");
         return readInputStream(stream);
     }
 

@@ -1,7 +1,9 @@
 package org.wso2.sample.siddhi.decision.point.js;
 
+import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticatedUser;
 import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticationContext;
 import org.wso2.carbon.identity.application.authentication.framework.exception.AuthenticationFailedException;
+import org.wso2.carbon.identity.application.authentication.framework.model.AuthenticatedUser;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,9 +12,8 @@ public class SiddhiJsFunctions {
 
     private static Map<String, Boolean> accountLockStatusMap = new ConcurrentHashMap<>();
 
-
-    public static Boolean isAccountLocked(JsAuthenticationContext context) {
-        String user = context.getWrapped().getSubject().getAuthenticatedSubjectIdentifier();
+    public static Boolean isAccountLocked(JsAuthenticatedUser jsAuthenticatedUser) {
+        String user = jsAuthenticatedUser.getWrapped().getUserName();
         return accountLockStatusMap.getOrDefault(user, Boolean.FALSE);
     }
 

@@ -8,6 +8,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.identity.application.authentication.framework.JsFunctionRegistry;
+import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticatedUser;
 import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticationContext;
 import org.wso2.sample.siddhi.decision.point.js.FailedAuthenticationFunctionImpl;
 import org.wso2.sample.siddhi.decision.point.js.PublishEventFunctionImpl;
@@ -26,7 +27,7 @@ public class CustomFunctionRegisterComponent {
     protected void activate(ComponentContext ctxt) {
 
         jsFunctionRegistry.register(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "isAccountLocked",
-                (Function<JsAuthenticationContext, Boolean>) SiddhiJsFunctions::isAccountLocked);
+                (Function<JsAuthenticatedUser, Boolean>) SiddhiJsFunctions::isAccountLocked);
         jsFunctionRegistry.register(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "failAuthentication",
                 new FailedAuthenticationFunctionImpl());
         jsFunctionRegistry.register(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "publishEvent", new PublishEventFunctionImpl());
