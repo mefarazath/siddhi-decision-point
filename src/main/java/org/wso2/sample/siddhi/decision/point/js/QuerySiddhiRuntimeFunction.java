@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -17,10 +16,12 @@
 
 package org.wso2.sample.siddhi.decision.point.js;
 
-import java.util.Map;
+import org.wso2.siddhi.core.event.Event;
+
+import java.util.List;
 
 @FunctionalInterface
-public interface PublishEventFunction {
+public interface QuerySiddhiRuntimeFunction {
 
-    void publishEvent(String siddhiAppName, String streamName, Map<String, Object> payloadData);
+    List<Event> query(String appName, String query);
 }

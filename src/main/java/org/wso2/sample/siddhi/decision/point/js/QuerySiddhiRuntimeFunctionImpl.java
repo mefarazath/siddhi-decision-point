@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -17,10 +16,18 @@
 
 package org.wso2.sample.siddhi.decision.point.js;
 
-import java.util.Map;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.wso2.sample.siddhi.decision.point.EmbeddedSiddhiEngine;
+import org.wso2.siddhi.core.event.Event;
 
-@FunctionalInterface
-public interface PublishEventFunction {
+import java.util.List;
 
-    void publishEvent(String siddhiAppName, String streamName, Map<String, Object> payloadData);
+public class QuerySiddhiRuntimeFunctionImpl implements QuerySiddhiRuntimeFunction {
+
+    @Override
+    public List<Event> query(String appName, String query) {
+        return EmbeddedSiddhiEngine.getInstance().getQueryInterface().query(appName, query);
+    }
+
 }

@@ -47,16 +47,11 @@
             <artifactId>siddhi-query-compiler</artifactId>
             <version>${siddhi.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.identity.framework</groupId>
-            <artifactId>org.wso2.carbon.identity.adaptive.auth</artifactId>
-            <version>${carbon.identity.framework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.identity</groupId>
-            <artifactId>org.wso2.carbon.identity.data.publisher.application.authentication</artifactId>
-            <version>5.1.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.wso2.carbon.identity.framework</groupId>-->
+            <!--<artifactId>org.wso2.carbon.identity.adaptive.auth</artifactId>-->
+            <!--<version>${carbon.identity.framework.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.wso2.carbon.identity.framework</groupId>
             <artifactId>org.wso2.carbon.identity.application.authentication.framework</artifactId>
@@ -142,8 +137,6 @@
                             org.osgi.framework.*,
                             org.osgi.service.component.*,
                             org.apache.commons.logging.*,
-                            org.wso2.carbon.user.api.*,
-                            org.wso2.carbon.user.core.*
                         </Import-Package>
                         <Export-Package>
                             !org.wso2.sample.siddhi.decision.point.internal,
@@ -158,6 +151,6 @@
 
     <properties>
         <siddhi.version>4.1.13</siddhi.version>
-        <carbon.identity.framework.version>5.11.154-SNAPSHOT</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.11.172</carbon.identity.framework.version>
     </properties>
 </project>

@@ -9,9 +9,8 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.identity.application.authentication.framework.JsFunctionRegistry;
 import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticatedUser;
-import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticationContext;
-import org.wso2.sample.siddhi.decision.point.js.FailedAuthenticationFunctionImpl;
 import org.wso2.sample.siddhi.decision.point.js.PublishEventFunctionImpl;
+import org.wso2.sample.siddhi.decision.point.js.QuerySiddhiRuntimeFunctionImpl;
 import org.wso2.sample.siddhi.decision.point.js.SiddhiJsFunctions;
 
 import java.util.function.Function;
@@ -28,9 +27,8 @@ public class CustomFunctionRegisterComponent {
 
         jsFunctionRegistry.register(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "isAccountLocked",
                 (Function<JsAuthenticatedUser, Boolean>) SiddhiJsFunctions::isAccountLocked);
-        jsFunctionRegistry.register(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "failAuthentication",
-                new FailedAuthenticationFunctionImpl());
         jsFunctionRegistry.register(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "publishEvent", new PublishEventFunctionImpl());
+        jsFunctionRegistry.register(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "querySiddhiRuntime", new QuerySiddhiRuntimeFunctionImpl());
     }
 
     @Deactivate
@@ -38,8 +36,8 @@ public class CustomFunctionRegisterComponent {
 
         if (jsFunctionRegistry != null) {
             jsFunctionRegistry.deRegister(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "isAccountLocked");
-            jsFunctionRegistry.deRegister(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "failAuthentication");
             jsFunctionRegistry.deRegister(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "publishEvent");
+            jsFunctionRegistry.deRegister(JsFunctionRegistry.Subsystem.SEQUENCE_HANDLER, "querySiddhiRuntime");
         }
     }
 

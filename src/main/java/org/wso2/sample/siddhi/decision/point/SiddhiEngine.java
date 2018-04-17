@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -15,12 +14,15 @@
  * limitations under the License.
  */
 
-package org.wso2.sample.siddhi.decision.point.js;
+package org.wso2.sample.siddhi.decision.point;
 
-import java.util.Map;
+import org.wso2.siddhi.core.SiddhiAppRuntime;
 
-@FunctionalInterface
-public interface PublishEventFunction {
+public interface SiddhiEngine {
 
-    void publishEvent(String siddhiAppName, String streamName, Map<String, Object> payloadData);
+    public boolean deployApp(String siddhiAppString);
+
+    public boolean undeployApp(String siddhiAppName);
+
+    public SiddhiAppRuntime getAppRunTime(String siddhiAppName);
 }
