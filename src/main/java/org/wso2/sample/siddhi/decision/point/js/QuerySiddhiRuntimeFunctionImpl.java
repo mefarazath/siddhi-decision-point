@@ -16,8 +16,6 @@
 
 package org.wso2.sample.siddhi.decision.point.js;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.wso2.sample.siddhi.decision.point.EmbeddedSiddhiEngine;
 import org.wso2.siddhi.core.event.Event;
 

@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package org.wso2.sample.siddhi.decision.point.js;
+package org.wso2.sample.siddhi.decision.point;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.wso2.sample.siddhi.decision.point.EmbeddedSiddhiEngine;
+import org.wso2.siddhi.query.api.SiddhiApp;
+import org.wso2.siddhi.query.api.util.AnnotationHelper;
+import org.wso2.siddhi.query.compiler.SiddhiCompiler;
 
-import java.util.Map;
+public class Utils {
 
-public class PublishEventFunctionImpl implements PublishEventFunction {
+    private static final String ANNOTATION_APP_NAME = "name";
 
-    private static final Log log = LogFactory.getLog(PublishEventFunctionImpl.class);
+    public static String getSiddhiAppName(String siddhiAppString) {
 
-    @Override
-    public void publishEvent(String siddhiAppName, String streamName, Map<String, Object> payloadData) {
-
-        EmbeddedSiddhiEngine.getInstance().getEventPublisher().publish(siddhiAppName, streamName, payloadData);
+        SiddhiApp parsedSiddhiApp = SiddhiCompiler.parse(siddhiAppString);
+        return AnnotationHelper
+                .getAnnotationElement(ANNOTATION_APP_NAME, null, parsedSiddhiApp.getAnnotations())
+                .getValue();
     }
 }

@@ -6,12 +6,17 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.wso2.sample.siddhi.decision.point.EmbeddedSiddhiEngine;
+import org.wso2.carbon.utils.CarbonUtils;
+import org.wso2.sample.siddhi.decision.point.deployer.SiddhiAppDeployer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 @Component(
@@ -21,6 +26,7 @@ import java.util.stream.Collectors;
 public class SiddhiDecisionPointComponent {
 
     private static final Log log = LogFactory.getLog(SiddhiDecisionPointComponent.class);
+    private SiddhiAppDeployer deployer = null;
 
     @Activate
     protected void activate(ComponentContext context) {
@@ -28,8 +34,16 @@ public class SiddhiDecisionPointComponent {
         log.info("-------------- SiddhiDecisionPointComponent ACTIVATION STARTED ----------------");
 
         try {
-            String siddhiApp = getSiddhiApp();
-            EmbeddedSiddhiEngine.getInstance().deployApp(siddhiApp);
+            Path siddhiAppRootPath = Paths.get(CarbonUtils.getCarbonRepository(), "siddhiApps");
+            if(Files.notExists(siddhiAppRootPath)) {
+                Files.createDirectory(siddhiAppRootPath);
+            }
+            // Copy our app to
+            Path toWrite = Paths.get(siddhiAppRootPath.toAbsolutePath().toString(), "accountLockApp.siddhi");
+            Files.write(toWrite, getSampleSiddhiApp().getBytes(StandardCharsets.UTF_8));
+
+            deployer = new SiddhiAppDeployer(siddhiAppRootPath);
+            deployer.start();
         } catch (Throwable throwable) {
             log.error(throwable);
         }
@@ -37,7 +51,7 @@ public class SiddhiDecisionPointComponent {
         log.info("-------------- SiddhiDecisionPointComponent ACTIVATION COMPLETED ----------------");
     }
 
-    private String getSiddhiApp() throws IOException {
+    private String getSampleSiddhiApp() throws IOException {
 
         InputStream stream = getClass().getClassLoader().getResourceAsStream("accountLockOnFailureApp.siddhi");
         return readInputStream(stream);
@@ -54,5 +68,8 @@ public class SiddhiDecisionPointComponent {
     protected void deactivate(ComponentContext context) {
 
         log.info("SiddhiDecisionPointComponent bundle is deactivated");
+        if (deployer != null) {
+            deployer.stop();
+        }
     }
 }

@@ -1,9 +1,6 @@
 package org.wso2.sample.siddhi.decision.point.js;
 
 import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticatedUser;
-import org.wso2.carbon.identity.application.authentication.framework.config.model.graph.js.JsAuthenticationContext;
-import org.wso2.carbon.identity.application.authentication.framework.exception.AuthenticationFailedException;
-import org.wso2.carbon.identity.application.authentication.framework.model.AuthenticatedUser;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

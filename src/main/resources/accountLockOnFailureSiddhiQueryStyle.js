@@ -19,8 +19,6 @@ function onInitialRequest(context) {
         id: '1',
         on: {
             success: function (context) {
-
-
                 // DUMMY TEST
                 var user = context.subject;
                 var username = user.username;

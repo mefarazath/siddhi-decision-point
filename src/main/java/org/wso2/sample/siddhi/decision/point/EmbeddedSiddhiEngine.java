@@ -33,6 +33,7 @@ public class EmbeddedSiddhiEngine implements SiddhiEngine {
     private Log log = LogFactory.getLog(EmbeddedSiddhiEngine.class);
     private SiddhiManager siddhiManager = new SiddhiManager();
     private QueryInterface queryInterface = new QueryInterface(siddhiManager.getSiddhiAppRuntimeMap());
+    private SiddhiEventPublisher eventPublisher = new SiddhiEventPublisher(siddhiManager.getSiddhiAppRuntimeMap());
     private static EmbeddedSiddhiEngine instance = new EmbeddedSiddhiEngine();
 
     private EmbeddedSiddhiEngine() {
@@ -99,5 +100,10 @@ public class EmbeddedSiddhiEngine implements SiddhiEngine {
 
     public QueryInterface getQueryInterface() {
         return queryInterface;
+    }
+
+    public SiddhiEventPublisher getEventPublisher() {
+
+        return eventPublisher;
     }
 }
